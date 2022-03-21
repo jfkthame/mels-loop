@@ -12,8 +12,6 @@ import {
 	ParsedNode,
 } from "../interfaces/models";
 import { contentUtils } from "./content-utils";
-import { Logger } from "tslog";
-import chalk from "chalk";
 import {
 	IContentParseOptions,
 	LoadContentModes,
@@ -21,26 +19,11 @@ import {
 	MLParseModes,
 } from "../interfaces/parser";
 
+import { Log, LogType } from "./logger";
+const logger = new Log({ disableLevel: [LogType.INFO] });
+
 import getConfig from "next/config";
 const { serverRuntimeConfig } = getConfig();
-
-const log: Logger = new Logger({
-	// name: "logger",
-	// instanceName: "MarkdownDriver",
-	displayLogLevel: false,
-	displayDateTime: false,
-	displayRequestId: false,
-	displayInstanceName: false,
-	displayFunctionName: false,
-	displayFilePath: "hidden",
-	// printLogMessageInNewLine: true,
-	// dateTimePattern: "hour:minute:second",
-	// displayTypes: true,
-	// colorizePrettyLogs: true,
-	// exposeErrorCodeFrame: true,
-	// exposeStack: true,
-	// setCallerAsLoggerName: true,
-});
 
 const CONTENT_PATH = "public/content/";
 
@@ -124,17 +107,17 @@ export function loadContentFolder(
 	});
 	const folderContentData = new FolderContent();
 
-	log.info(
-		`${chalk.blueBright(
-			"collect"
-		)} - sorted content in "${contentDir}" for locale "${options.locale}"`
+	logger.warn(
+		"collect",
+		`sorted content in "${contentDir}" for locale "${options.locale}"`,
+		"green"
 	);
 
 	const targetFileName = getIndexFileName(options.locale);
 
 	contentNames.forEach((rec: Dirent) => {
 		const name = rec.name;
-		log.info(`${chalk.magenta("process")} - content ID "${name}"`);
+		logger.info("process", `content ID "${name}"`, "magenta");
 
 		let fullPath: string;
 
@@ -151,7 +134,7 @@ export function loadContentFolder(
 			fullPath = path.join(contentDir, name, targetFileName);
 
 			if (!fs.existsSync(fullPath)) {
-				log.warn(`error - Path not found: "${fullPath}"`);
+				logger.warn("error", `Path not found: "${fullPath}"`);
 				// return error without disclosing OS path
 				return folderContentData.pages.push(
 					new ParsedPageData({
@@ -171,7 +154,7 @@ export function loadContentFolder(
 
 		try {
 			const fileContents = fs.readFileSync(fullPath, "utf8");
-			log.info(`${chalk.green("parse")} - parsed "${fullPath}"`);
+			logger.info("parse", `parsed "${fullPath}"`);
 
 			// Use gray-matter to parse the post metadata section
 			const { data: matterData, content } = matter(fileContents);
@@ -194,7 +177,7 @@ export function loadContentFolder(
 				parsedPageData.parsed = tree;
 			}
 		} catch (e) {
-			log.error(`Error processing ${fullPath}`, e);
+			logger.error(`Error processing ${fullPath}`, e as unknown);
 			folderContentData.pages.push(new ParsedPageData({ error: String(e) }));
 		}
 	});
@@ -210,7 +193,7 @@ function parseDate(dateString: string | null | undefined): Date {
 			const t = Date.parse(dateString);
 			return new Date(t);
 		} catch (e) {
-			log.error(`Error parsing date ${dateString}`);
+			logger.error(`Error parsing date ${dateString}`);
 		}
 	}
 	return new Date();
