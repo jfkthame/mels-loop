@@ -23,7 +23,7 @@ export const useFormField = ({
 	icon,
 	locale,
 	tabIndex,
-	validate,
+	rules,
 	className,
 }: IFieldDef) => {
 	const [value, setValue] = useState(initValue(type));
@@ -38,6 +38,9 @@ export const useFormField = ({
 			value={value}
 			onChange={setValue}
 			validation={validation}
+			validateRules={(value: string) =>
+				rules.map((rule) => rule(value)).indexOf(false) === -1
+			}
 			setValidation={setValidation}
 			id={id}
 			type={type}
@@ -46,7 +49,6 @@ export const useFormField = ({
 			icon={icon}
 			locale={locale}
 			tabIndex={tabIndex}
-			validate={validate}
 			className={st(classes.field, className)}
 		/>
 	);

@@ -3,9 +3,8 @@ const RegExpEmail =
 
 const EmptyString = /^\s+$|^$/gi;
 
-export const VALUE_NOT_EMPTY = (value: string) => {
-	return value.length > 0 && !value.match(EmptyString);
-};
+export const VALUE_NOT_EMPTY = (value: string) =>
+	value.length > 0 && !value.match(EmptyString);
 
 export const VALUE_VALID_EMAIL = (value: string) =>
 	!!(value.length > 0 && value.match(RegExpEmail));

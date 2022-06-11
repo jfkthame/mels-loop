@@ -12,9 +12,9 @@ export const Field = ({
 	required,
 	icon,
 	validation,
+	validateRules,
 	locale,
 	onChange,
-	validate,
 	setValidation,
 	className,
 }: IFieldProps) => {
@@ -27,9 +27,9 @@ export const Field = ({
 		if (!value && validation == VALID) return setValidation(INITIAL);
 		else if (!value && validation !== EDITED) return;
 		else if (!value) return setValidation(INITIAL);
-		const isValid = validate(value) ? VALID : INVALID;
-		setValidation(isValid);
-		return isValid === VALID;
+		const isValid = validateRules(value);
+		setValidation(isValid ? VALID : INVALID);
+		return isValid;
 	};
 
 	const onInputChange = (e: FieldChangeEvent) => {

@@ -17,13 +17,15 @@ export interface IFieldLocale {
 
 export type FieldType = "text" | "email" | "number";
 
+export type ValidationRule = (value: string) => boolean;
+
 export interface IFieldDef {
 	id: string;
 	type: FieldType;
 	tag: "input" | "textarea";
 	icon?: React.ReactNode;
 	required?: boolean;
-	validate?: (value: string) => boolean;
+	rules?: ValidationRule[];
 	tabIndex?: number;
 	className?: string;
 	locale: IFieldLocale;
@@ -34,6 +36,7 @@ export interface IFieldHooks {
 	onChange: Dispatch<SetStateAction<string>>;
 	validation?: FormFieldState;
 	setValidation?: (state: FormFieldState) => void;
+	validateRules: (value: string) => boolean;
 }
 
 export type IFieldProps = IFieldDef & IFieldHooks;

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { ComponentProps } from "../../interfaces/models";
 import { FormFieldState } from "./types";
 import { Captcha } from "./captcha";
@@ -61,7 +61,7 @@ export const Form = ({
 		return (
 			fields
 				.map((field) => {
-					if (!field.props.validate(field.props.value)) {
+					if (!field.props.validateRules(field.props.value)) {
 						field.props.setValidation(FormFieldState.INVALID);
 						return FormFieldState.INVALID;
 					}
@@ -84,6 +84,35 @@ export const Form = ({
 			else onFetchSuccess();
 		}
 	};
+
+	useEffect(() => {
+		async function handleSubmitAgain() {
+			if (handleValidation()) {
+				if (!sendButtonState) {
+					setHighlightCaptcha(true);
+					return;
+				}
+				setLoadingIndicator(true);
+				const res = await onSubmit();
+				const { error } = await res.json();
+				if (error) onFetchError();
+				else onFetchSuccess();
+			}
+		}
+
+		const keyDownHandler = (event) => {
+			console.log(event);
+			if (
+				(event.keyCode === 13 && event.metaKey) ||
+				(event.keyCode === 13 && event.ctrlKey)
+			) {
+				event.preventDefault();
+				const res = handleSubmitAgain();
+			}
+		};
+		document.addEventListener("keydown", keyDownHandler);
+		return () => document.removeEventListener("keydown", keyDownHandler);
+	}, []);
 
 	return (
 		<div className={st(classes.root, className)}>
