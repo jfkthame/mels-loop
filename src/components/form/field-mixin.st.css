@@ -1,0 +1,15 @@
+@namespace "Field";
+
+@st-import Field from "./field.st.css";
+
+:vars {
+	LabelIconColor: black;
+}
+
+.root {
+	-st-extends: Field;
+}
+
+.root::text {
+	color: value(LabelIconColor);
+}

@@ -107,7 +107,7 @@ export const Locale: Language = {
 	CONTACT_FORM_ON_FAIL_MESSAGE_TRY_AGAIN: "Send another?",
 	CONTACT_FORM_ON_FAIL_MESSAGE_REPORT_PROBLEM: "Report problem",
 	CONTACT_FORM_INVALID_NAME: "Name cannot be blank",
-	CONTACT_FORM_INVALID_EMAIL: "Invalid e-mail address",
+	CONTACT_FORM_INVALID_EMAIL: "Please enter a valid e-mail address",
 	CONTACT_FORM_INVALID_MESSAGE: "Message cannot be empty. What's on your mind?",
 	CONTACT_FORM_SUCCESS_MESSAGE: "Your message was sent successfuly!",
 	CONTACT_FORM_SUCCESS_FAIL:

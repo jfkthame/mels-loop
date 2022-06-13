@@ -1,5 +1,22 @@
-import React, { Dispatch, SetStateAction } from "react";
+import {
+	ChangeEvent,
+	KeyboardEvent,
+	Dispatch,
+	ReactNode,
+	SetStateAction,
+} from "react";
 import { ComponentProps } from "../../interfaces/models";
+
+export interface IFormProps extends ComponentProps {
+	entries: Record<string, IFieldDef>;
+	onSuccessMessage: React.ReactNode;
+	onFailMessage: React.ReactNode;
+	submitButtonLabel: string;
+	submitButtonLabelActive: string;
+	locale?: string;
+	theme?: string;
+	onSubmit: (values: Element[]) => Promise<Response>;
+}
 
 export enum FormFieldState {
 	INITIAL = "initial",
@@ -12,6 +29,7 @@ export enum FormFieldState {
 export type FieldType = "text" | "email" | "number";
 
 export type ValidationRule = (value: string) => boolean;
+
 export interface IFieldLocale {
 	label: string;
 	placeholder?: string;
@@ -22,7 +40,7 @@ export interface IFieldDef {
 	id: string;
 	type: FieldType;
 	tag: "input" | "textarea";
-	icon?: React.ReactNode;
+	icon?: ReactNode;
 	required?: boolean;
 	rules?: ValidationRule[];
 	tabIndex?: number;
@@ -49,6 +67,8 @@ export interface ICaptchaProps {
 	locale: string;
 	theme: string;
 	tabIndex: number;
+	highlight: boolean;
+	className?: string;
 }
 
 export interface IFormInstance extends ComponentProps {
@@ -59,4 +79,6 @@ export interface IFormInstance extends ComponentProps {
 
 export type FieldHTMLType = HTMLInputElement | HTMLTextAreaElement;
 
-export type FieldChangeEvent = React.ChangeEvent<FieldHTMLType>;
+export type FieldChangeEvent = ChangeEvent<FieldHTMLType>;
+
+export type FieldKeyboardEvent = KeyboardEvent<FieldHTMLType>;

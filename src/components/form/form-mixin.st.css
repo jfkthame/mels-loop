@@ -1,6 +1,11 @@
 @namespace "FormMixin";
 
 @st-import Form from "./form.st.css";
+@st-import FieldMixin from "./field-mixin.st.css";
+
+:vars {
+	FieldLabelIconColor: red;
+}
 
 .root {
 	-st-extends: Form;
@@ -13,4 +18,10 @@
 .root::button:hover {
 	background-color: #303030;
 	color: #fff;
+}
+
+.root::field {
+	-st-mixin: FieldMixin(
+		LabelIconColor value(FieldLabelIconColor)
+	);
 }

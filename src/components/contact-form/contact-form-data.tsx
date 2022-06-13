@@ -9,7 +9,7 @@ import {
 
 export type FieldName = "fullname" | "email" | "message";
 
-export const formFields: Record<FieldName, IFieldDef> = {
+export const formFields: Record<string, IFieldDef> = {
 	fullname: {
 		id: "fullname",
 		type: "text",

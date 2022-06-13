@@ -33,25 +33,18 @@
 }
 .input:active,
 .input:focus {
-	background-color: #ffa;
+	background-color: #afa;
+	color: red;
 	border-color: #e0e0e0;
 	outline: 0;
 	cursor: text;
 }
 
-.input:-webkit-autofill::first-line,
-.input:-webkit-autofill,
-.input:-webkit-autofill:hover,
-.input:-webkit-autofill:focus,
-.input:-webkit-autofill:active {
-	background-color: none !important;
-	box-shadow: 0 0 0 30px #ffa inset !important;
-	-webkit-box-shadow: 0 0 0 30px #ffa inset !important;
-}
-
 .error {
 	color: #c00;
 }
+
+.errorText {}
 
 .errorIcon path {
 	color: #c00;

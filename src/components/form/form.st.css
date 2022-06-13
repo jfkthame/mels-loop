@@ -1,6 +1,7 @@
 @namespace "Form";
 
 @st-import Field from "./field.st.css";
+@st-import Captcha from "./captcha.st.css";
 @st-import LoadingIndicator from "./../loading-indicator/loading-indicator.st.css";
 
 :vars {
@@ -16,15 +17,11 @@
 
 .formTitle {}
 
-.captcha {
-	-st-states: highlightCaptcha(boolean);
+.captchaContainer {
+	width: 304px;
+	height: 78px;
+	margin-bottom: 1rem;
 }
-.captcha:highlightCaptcha {
-	border: 2px solid red;
-    animation: flickerAnimation 1s infinite;
-}
-
-.submit {}
 
 .submitButton {}
 
@@ -55,6 +52,10 @@
 	fill: value(success);
 }
 
+.captcha {
+	-st-extends: Captcha;
+}
+
 .loadingIndicator {
 	-st-extends: LoadingIndicator;
 }
@@ -62,25 +63,4 @@
 .field {
 	-st-extends: Field;
 }
-
-@keyframes flickerAnimation {
-  0%   { border-color: rgba(255, 0, 0, 0.2); }
-  50%  { border-color: rgba(255, 0, 0, 1); }
-  100% { border-color: rgba(255, 0, 0, 0.2); }
-}
-/* @-o-keyframes flickerAnimation{
-  0%   { opacity:1; }
-  50%  { opacity:0; }
-  100% { opacity:1; }
-}
-@-moz-keyframes flickerAnimation{
-  0%   { opacity:1; }
-  50%  { opacity:0; }
-  100% { opacity:1; }
-}
-@-webkit-keyframes flickerAnimation{
-  0%   { opacity:1; }
-  50%  { opacity:0; }
-  100% { opacity:1; }
-} */
 
